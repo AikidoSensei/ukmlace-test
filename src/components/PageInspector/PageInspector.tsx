@@ -91,21 +91,21 @@ const PageInspector: React.FC<PageInspectorProps> = ({ selectedPageId }) => {
          <button
           type="button"
           onClick={() => setViewMode("keyvalue")}
-          className={`min-w-0 flex-1 px-2 py-1 rounded text-sm ${viewMode === "keyvalue" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
+          className={`min-w-0 flex-1 px-2 py-1 rounded text-sm ${viewMode === "keyvalue" ? "bg-gray-200  font-medium" : "text-gray-600  hover:bg-gray-100 "}`}
         >
           Clean
         </button>
         <button
           type="button"
           onClick={() => setViewMode("parsed")}
-          className={`min-w-0 flex-1 px-2 py-1 rounded text-sm ${viewMode === "parsed" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
+          className={`min-w-0 flex-1 px-2 py-1 rounded text-sm ${viewMode === "parsed" ? "bg-gray-200  font-medium" : "text-gray-600  hover:bg-gray-100 "}`}
         >
           Parsed
         </button>
         <button
           type="button"
           onClick={() => setViewMode("raw")}
-          className={`min-w-0 flex-1 px-2 py-1 rounded text-sm ${viewMode === "raw" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
+          className={`min-w-0 flex-1 px-2 py-1 rounded text-sm ${viewMode === "raw" ? "bg-gray-200  font-medium" : "text-gray-600  hover:bg-gray-100 "}`}
         >
           Raw
         </button> 

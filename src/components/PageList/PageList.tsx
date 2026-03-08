@@ -22,8 +22,8 @@ const PageList: React.FC<PageListProps> = ({
               onClick={() => onSelectPage(page.id)}
               className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
                 selectedPageId === page.id
-                  ? "bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-200"
-                  : "hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-800 dark:text-gray-200"
+                  ? "bg-blue-100  text-blue-800 "
+                  : "hover:bg-gray-100  text-gray-800 "
               }`}
             >
               {page.title || "Untitled"}
