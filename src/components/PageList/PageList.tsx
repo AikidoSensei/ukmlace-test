@@ -20,10 +20,10 @@ const PageList: React.FC<PageListProps> = ({
             <button
               type="button"
               onClick={() => onSelectPage(page.id)}
-              className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
+              className={`w-full text-left px-3 py-2 rounded-md text-sm ${
                 selectedPageId === page.id
                   ? "bg-blue-100  text-blue-800 "
-                  : "hover:bg-gray-100  text-gray-800 "
+                  : "bg-blue-50 hover:bg-gray-100  text-gray-800 "
               }`}
             >
               {page.title || "Untitled"}

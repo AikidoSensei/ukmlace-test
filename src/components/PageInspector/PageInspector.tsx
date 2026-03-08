@@ -54,7 +54,7 @@ const PageInspector: React.FC<PageInspectorProps> = ({ selectedPageId }) => {
 
   if (!selectedPageId) {
     return (
-      <div className="flex flex-col h-full items-center justify-center text-gray-500 dark:text-gray-400 text-sm">
+      <div className="flex flex-col h-full items-center justify-center text-gray-500 text-sm">
         Select a page to inspect its block JSON.
       </div>
     );
@@ -62,7 +62,7 @@ const PageInspector: React.FC<PageInspectorProps> = ({ selectedPageId }) => {
 
   if (loading) {
     return (
-      <div className="flex flex-col h-full items-center justify-center text-gray-500 dark:text-gray-400 text-sm">
+      <div className="flex flex-col h-full items-center justify-center text-gray-500 text-sm">
         Loading blocks…
       </div>
     );
@@ -70,7 +70,7 @@ const PageInspector: React.FC<PageInspectorProps> = ({ selectedPageId }) => {
 
   if (error) {
     return (
-      <div className="flex flex-col h-full items-center justify-center text-red-600 dark:text-red-400 text-sm">
+      <div className="flex flex-col h-full items-center justify-center text-red-600 text-sm">
         {error}
       </div>
     );
@@ -86,7 +86,7 @@ const PageInspector: React.FC<PageInspectorProps> = ({ selectedPageId }) => {
   return (
     <div className="flex-1 min-h-0 min-w-0 flex flex-col">
       <div className="flex items-center gap-2 mb-2">
-        <span className="text-sm text-gray-600 dark:text-gray-400">View:</span>
+        <span className="text-sm text-gray-600">View:</span>
         <div className="flex items-center justify-between md:justify-start gap-x-4 w-full">
          <button
           type="button"

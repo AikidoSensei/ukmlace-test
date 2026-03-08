@@ -110,36 +110,3 @@
 .rjl-boolean { color: #b45309; }
 .rjl-other { color: #4b5563; }
 
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  .rjl-container {
-    color: #e5e7eb;
-  }
-  .rjl-expand-icon,
-  .rjl-collapse-icon {
-    color: #d1d5db;
-  }
-  .rjl-expand-icon:hover,
-  .rjl-collapse-icon:hover {
-    background: rgba(255, 255, 255, 0.08);
-  }
-  .rjl-collapsed-content {
-    color: #9ca3af;
-  }
-  .rjl-collapsed-content:hover {
-    color: #f3f4f6;
-  }
-  .rjl-label,
-  .rjl-clickable-label {
-    color: #a78bfa;
-  }
-  .rjl-punctuation {
-    color: #9ca3af;
-  }
-  .rjl-null,
-  .rjl-undefined { color: #f87171; }
-  .rjl-number { color: #60a5fa; }
-  .rjl-string { color: #34d399; }
-  .rjl-boolean { color: #fbbf24; }
-  .rjl-other { color: #9ca3af; }
-}
