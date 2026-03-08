@@ -1,0 +1,145 @@
+/* Custom styles for react-json-view-lite – readable, mobile-friendly, clear expand/collapse */
+
+/* Container – fill available width so the panel doesn’t show a blank strip */
+.rjl-container {
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 1rem 1.25rem;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+  overflow: auto;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Per-row block (property or array item) */
+.rjl-basic-child {
+  margin: 0;
+  padding: 0.25rem 0;
+  padding-left: 0.5rem;
+  min-height: 1.75rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+/* Child list (nested objects/arrays) – per library doc */
+.rjl-child-fields {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Expand / collapse button – visible and touch-friendly */
+.rjl-expand-icon,
+.rjl-collapse-icon {
+  cursor: pointer;
+  font-size: 1rem;
+  margin-right: 0.25rem;
+  user-select: none;
+  min-width: 1.75rem;
+  min-height: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem;
+  border-radius: 0.25rem;
+  color: #374151;
+  flex-shrink: 0;
+}
+.rjl-expand-icon:hover,
+.rjl-collapse-icon:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+.rjl-expand-icon::after {
+  content: "\25B8"; /* ▸ */
+}
+.rjl-collapse-icon::after {
+  content: "\25BE"; /* ▾ */
+}
+
+/* Collapsed placeholder (clickable) */
+.rjl-collapsed-content {
+  cursor: pointer;
+  margin-right: 0.25rem;
+  user-select: none;
+  min-height: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0;
+  color: #6b7280;
+}
+.rjl-collapsed-content::after {
+  content: "...";
+  font-size: 0.875em;
+}
+.rjl-collapsed-content:hover {
+  color: #111;
+}
+
+/* Labels (keys) */
+.rjl-label {
+  font-weight: 600;
+  margin-right: 0.35rem;
+  color: #7c3aed;
+}
+.rjl-clickable-label {
+  font-weight: 600;
+  margin-right: 0.35rem;
+  color: #7c3aed;
+  cursor: pointer;
+}
+
+/* Punctuation */
+.rjl-punctuation {
+  margin-right: 0.15rem;
+  font-weight: bold;
+  color: #374151;
+}
+
+/* Value colors */
+.rjl-null { color: #dc2626; }
+.rjl-undefined { color: #dc2626; }
+.rjl-number { color: #2563eb; }
+.rjl-string { color: #059669; }
+.rjl-boolean { color: #b45309; }
+.rjl-other { color: #4b5563; }
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .rjl-container {
+    color: #e5e7eb;
+  }
+  .rjl-expand-icon,
+  .rjl-collapse-icon {
+    color: #d1d5db;
+  }
+  .rjl-expand-icon:hover,
+  .rjl-collapse-icon:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .rjl-collapsed-content {
+    color: #9ca3af;
+  }
+  .rjl-collapsed-content:hover {
+    color: #f3f4f6;
+  }
+  .rjl-label,
+  .rjl-clickable-label {
+    color: #a78bfa;
+  }
+  .rjl-punctuation {
+    color: #9ca3af;
+  }
+  .rjl-null,
+  .rjl-undefined { color: #f87171; }
+  .rjl-number { color: #60a5fa; }
+  .rjl-string { color: #34d399; }
+  .rjl-boolean { color: #fbbf24; }
+  .rjl-other { color: #9ca3af; }
+}
