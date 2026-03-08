@@ -87,27 +87,30 @@ const PageInspector: React.FC<PageInspectorProps> = ({ selectedPageId }) => {
     <div className="flex-1 min-h-0 min-w-0 flex flex-col">
       <div className="flex items-center gap-2 mb-2">
         <span className="text-sm text-gray-600 dark:text-gray-400">View:</span>
-        <button
+        <div className="flex items-center justify-between md:justify-start gap-x-4 w-full">
+         <button
           type="button"
           onClick={() => setViewMode("keyvalue")}
-          className={`px-2 py-1 rounded text-sm ${viewMode === "keyvalue" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
+          className={`min-w-0 flex-1 px-2 py-1 rounded text-sm ${viewMode === "keyvalue" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
         >
           Key-value
         </button>
         <button
           type="button"
           onClick={() => setViewMode("parsed")}
-          className={`px-2 py-1 rounded text-sm ${viewMode === "parsed" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
+          className={`min-w-0 flex-1 px-2 py-1 rounded text-sm ${viewMode === "parsed" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
         >
           Parsed
         </button>
         <button
           type="button"
           onClick={() => setViewMode("raw")}
-          className={`px-2 py-1 rounded text-sm ${viewMode === "raw" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
+          className={`min-w-0 flex-1 px-2 py-1 rounded text-sm bg-green-500 ${viewMode === "raw" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
         >
           Raw
-        </button>
+        </button> 
+        </div>
+        
       </div>
       <JsonViewer data={dataToShow} />
     </div>

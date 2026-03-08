@@ -31,11 +31,11 @@ const JsonViewer: React.FC<JsonViewerProps> = ({ data }) => {
       : { value: data };
 
   return (
-    <div className="flex flex-col h-full w-full min-w-0">
+    <div className="flex flex-col h-full w-full min-w-0 bg-green-500">
       <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 px-2">
         Raw JSON
       </h2>
-      <div className="flex-1 min-h-0 min-w-0 overflow-auto rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+      <div className="flex-1 min-h-0 min-w-0 overflow-auto rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 border-radius-lg">
         <JsonView
           data={viewData as object}
           style={{ ...defaultStyles, ...customStyles }}
