@@ -28,3 +28,21 @@ export interface ParsedPage {
   /** Block IDs in order, for optional reference */
   blockIds: string[];
 }
+
+/**
+ * Value in key-value output: string, array of strings, or nested object.
+ */
+export type KeyValueSectionValue =
+  | string
+  | string[]
+  | Record<string, string | string[] | Record<string, string>>;
+
+/** One top-level section value: object (with optional nesting) or array */
+export type KeyValueTopValue = Record<string, KeyValueSectionValue> | string[];
+
+/**
+ * Key-value shape for learning hub: section titles (##) become top-level keys;
+ * subsections (###) become nested objects or arrays; field labels become keys.
+ * e.g. { "prompt": { "who_are_you": "" }, "approach": { "grips": "" }, "differential_diagnoses": [""] }
+ */
+export type KeyValuePage = Record<string, KeyValueTopValue>;

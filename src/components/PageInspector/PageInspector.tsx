@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { getPageBlocks } from "../../services/notionService";
-import { parseNotionBlockResponse } from "../../parser/notionPageParser";
+import { parseNotionBlockResponse, parseNotionBlockResponseToKeyValue } from "../../parser/notionPageParser";
 import JsonViewer from "../JsonViewer/JsonViewer";
 
 interface PageInspectorProps {
@@ -42,6 +42,16 @@ const PageInspector: React.FC<PageInspectorProps> = ({ selectedPageId }) => {
     };
   }, [selectedPageId]);
 
+  const parsed = useMemo(
+    () => (rawResponse ? parseNotionBlockResponse(rawResponse) : null),
+    [rawResponse]
+  );
+  const keyValue = useMemo(
+    () => (rawResponse ? parseNotionBlockResponseToKeyValue(rawResponse) : null),
+    [rawResponse]
+  );
+  const [viewMode, setViewMode] = useState<"raw" | "parsed" | "keyvalue">("keyvalue");
+
   if (!selectedPageId) {
     return (
       <div className="flex flex-col h-full items-center justify-center text-gray-500 dark:text-gray-400 text-sm">
@@ -66,12 +76,12 @@ const PageInspector: React.FC<PageInspectorProps> = ({ selectedPageId }) => {
     );
   }
 
-  const parsed = useMemo(
-    () => (rawResponse ? parseNotionBlockResponse(rawResponse) : null),
-    [rawResponse]
-  );
-  const [viewMode, setViewMode] = useState<"raw" | "parsed">("parsed");
-  const dataToShow = viewMode === "parsed" && parsed ? parsed : rawResponse;
+  const dataToShow =
+    viewMode === "keyvalue" && keyValue
+      ? keyValue
+      : viewMode === "parsed" && parsed
+        ? parsed
+        : rawResponse;
 
   return (
     <div className="flex-1 min-h-0 min-w-0 flex flex-col">
@@ -79,10 +89,10 @@ const PageInspector: React.FC<PageInspectorProps> = ({ selectedPageId }) => {
         <span className="text-sm text-gray-600 dark:text-gray-400">View:</span>
         <button
           type="button"
-          onClick={() => setViewMode("raw")}
-          className={`px-2 py-1 rounded text-sm ${viewMode === "raw" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
+          onClick={() => setViewMode("keyvalue")}
+          className={`px-2 py-1 rounded text-sm ${viewMode === "keyvalue" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
         >
-          Raw
+          Key-value
         </button>
         <button
           type="button"
@@ -90,6 +100,13 @@ const PageInspector: React.FC<PageInspectorProps> = ({ selectedPageId }) => {
           className={`px-2 py-1 rounded text-sm ${viewMode === "parsed" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
         >
           Parsed
+        </button>
+        <button
+          type="button"
+          onClick={() => setViewMode("raw")}
+          className={`px-2 py-1 rounded text-sm ${viewMode === "raw" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
+        >
+          Raw
         </button>
       </div>
       <JsonViewer data={dataToShow} />
