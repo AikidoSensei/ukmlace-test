@@ -98,7 +98,7 @@ const App: React.FC = () => {
           }}
         >
           <div style={{ flexShrink: 0, padding: "0.5rem 0.75rem", borderBottom: "1px solid #e5e7eb" }}>
-            <span style={{ fontSize: "0.8125rem", fontWeight: 600, color: "#374151" }}>Pages</span>
+            <span style={{ fontSize: "0.8125rem", fontWeight: 600, color: "#374151" }}>Cases</span>
           </div>
           <div style={{ flex: 1, overflowY: "auto", padding: "0.5rem" }}>
             <PageList

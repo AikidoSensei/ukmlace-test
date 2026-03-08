@@ -93,7 +93,7 @@ const PageInspector: React.FC<PageInspectorProps> = ({ selectedPageId }) => {
           onClick={() => setViewMode("keyvalue")}
           className={`min-w-0 flex-1 px-2 py-1 rounded text-sm ${viewMode === "keyvalue" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
         >
-          Key-value
+          Clean
         </button>
         <button
           type="button"
@@ -105,7 +105,7 @@ const PageInspector: React.FC<PageInspectorProps> = ({ selectedPageId }) => {
         <button
           type="button"
           onClick={() => setViewMode("raw")}
-          className={`min-w-0 flex-1 px-2 py-1 rounded text-sm bg-green-500 ${viewMode === "raw" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
+          className={`min-w-0 flex-1 px-2 py-1 rounded text-sm ${viewMode === "raw" ? "bg-gray-200 dark:bg-gray-700 font-medium" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
         >
           Raw
         </button> 
