@@ -1,6 +1,41 @@
 import type { Plugin } from "vite";
 import { Client } from "@notionhq/client";
 
+type NotionBlock = { id: string; has_children?: boolean; [key: string]: unknown };
+
+async function fetchAllChildren(
+  notion: Client,
+  blockId: string
+): Promise<NotionBlock[]> {
+  const results: NotionBlock[] = [];
+  let cursor: string | undefined;
+  do {
+    const res = await notion.blocks.children.list({
+      block_id: blockId,
+      ...(cursor && { start_cursor: cursor }),
+    });
+    const list = (res as { results?: unknown[] }).results ?? [];
+    results.push(...(list as NotionBlock[]));
+    const hasMore = (res as { has_more?: boolean }).has_more;
+    cursor = (res as { next_cursor?: string }).next_cursor;
+    if (!hasMore || !cursor) break;
+  } while (true);
+  return results;
+}
+
+async function fetchFullPage(notion: Client, pageId: string): Promise<NotionBlock[]> {
+  const top = await fetchAllChildren(notion, pageId);
+  const flattened: NotionBlock[] = [];
+  for (const block of top) {
+    flattened.push(block);
+    if (block.has_children) {
+      const children = await fetchFullPage(notion, block.id);
+      flattened.push(...children);
+    }
+  }
+  return flattened;
+}
+
 export function notionApiPlugin(env: Record<string, string>): Plugin {
   const token = env.NOTION_TOKEN ?? env.VITE_NOTION_TOKEN;
   const databaseId = env.NOTION_DATABASE_ID ?? env.VITE_NOTION_DATABASE_ID;
@@ -92,9 +127,15 @@ export function notionApiPlugin(env: Record<string, string>): Plugin {
           }
           try {
             const notion = new Client({ auth: token });
-            const response = await notion.blocks.children.list({
-              block_id: pageId,
-            });
+            const results = await fetchFullPage(notion, pageId);
+            const response = {
+              object: "list",
+              results,
+              next_cursor: null,
+              has_more: false,
+              type: "block",
+              block: {},
+            };
             res.setHeader("Content-Type", "application/json");
             res.end(JSON.stringify(response));
           } catch (err) {
