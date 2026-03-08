@@ -1,4 +1,6 @@
 import type { NotionPage } from "../types/notion";
+import type { ParsedPage } from "../types/parsedPage";
+import { parseNotionBlockResponse } from "../parser/notionPageParser";
 
 const API_BASE = "";
 
@@ -26,4 +28,13 @@ export async function getPageBlocks(pageId: string): Promise<unknown> {
     throw new Error((data as { error?: string }).error ?? res.statusText);
   }
   return res.json();
+}
+
+/**
+ * Fetches page blocks and parses them into structured JSON (sections + content)
+ * for consumption in ukmlace plan 2 learning hub.
+ */
+export async function getParsedPage(pageId: string): Promise<ParsedPage> {
+  const raw = await getPageBlocks(pageId);
+  return parseNotionBlockResponse(raw);
 }

@@ -1,0 +1,128 @@
+## Prompt
+
+- Who you are:
+- Where you are:
+- Who the patient is:
+- Other information:
+- What you must do:
+
+## Patient information
+
+Name:
+
+Age:
+
+Occupation:
+
+Opening statement:
+
+## Concerns
+
+Patient concerns:
+
+Additional notes:
+
+## Approach
+
+### GRIPS:
+
+### Presenting complaint
+
+Presenting complaint: 
+
+### History of presenting complaint
+
+### SOCRATES (pain)
+
+- Site:
+- Onset:
+- Character:
+- Radiation:
+- Alleviating factors:
+- Timing:
+- Exacerbating factors:
+- Severity:
+
+### ODIPARA
+
+- Onset:
+- Duration:
+- Intensity:
+- Progression:
+- Aggravating factors:
+- Relieving factors:
+- Associated symptoms:
+
+### Differential diagnoses
+
+- 
+- 
+- 
+
+### Red flags
+
+- 
+- 
+- 
+
+### Past medical history
+
+- Past medical conditions:
+- Medications:
+- Allergies:
+- Family history:
+- Travel history:
+- Occupation:
+
+### Social history
+
+- Diet:
+- Exercise:
+- Smoking:
+- Alcohol:
+
+### ICE
+
+- Ideas:
+- Concerns:
+- Expectations:
+
+### Impact
+
+Daily life impact:
+
+Work impact:
+
+Sleep impact:
+
+### Examination
+
+General examination:
+
+### Findings:
+
+- 
+- 
+- 
+
+### Diagnosis
+
+Primary diagnosis:
+
+Explanation for patient:
+
+### Management
+
+- Admit / outpatient care:
+- Investigations:
+    
+    Important:
+    
+    Routine:
+    
+- Referral / specialist:
+- Symptomatic treatment:
+- Senior review:
+- Patient leaflets:
+- Follow up:
+- Safety netting:
