@@ -1,0 +1,96 @@
+{
+	"prompt": {
+		"who_you_are": "",
+		"where_you_are": "",
+		"who_the_patient_is": "",
+		"other_information": "",
+		"what_you_must_do": ""
+	},
+	"patient_information": {
+		"name": "",
+		"age": "",
+		"occupation": "",
+		"opening_statement": ""
+	},
+	"concerns": {
+		"patient_concerns": "",
+		"additional_notes": ""
+	},
+	"approach": {
+		"grips": [""],
+		"presenting_complaint": {
+			"presenting_complaint": ""
+		},
+		"history_of_presenting_complaint": ["", ""],
+		"pain_history": {
+			"socrates": {
+				"site": "",
+				"onset": "",
+				"character": "",
+				"radiation": "",
+				"alleviating_factors": "",
+				"timing": "",
+				"exacerbating_factors": "",
+				"severity": ""
+			}
+		},
+		"symptom_framework": {
+			"odipara": {
+				"onset": "",
+				"duration": "",
+				"intensity": "",
+				"progression": "",
+				"aggravating_factors": "",
+				"relieving_factors": "",
+				"associated_symptoms": ""
+			}
+		},
+		"differential_diagnoses": ["", "", ""],
+		"red_flags": ["", "", ""],
+		"past_medical_history": {
+			"past_medical_conditions": "",
+			"medications": "",
+			"allergies": "",
+			"family_history": "",
+			"travel_history": "",
+			"occupation": ""
+		},
+		"social_history": {
+			"diet": "",
+			"exercise": "",
+			"smoking": "",
+			"alcohol": ""
+		},
+		"ice": {
+			"ideas": "",
+			"concerns": "",
+			"expectations": ""
+		},
+		"impact": {
+			"daily_life_impact": "",
+			"work_impact": "",
+			"sleep_impact": ""
+		},
+		"examination": {
+			"general_examination": "",
+			"findings": ["", "", ""]
+		},
+		"diagnosis": {
+			"primary_diagnosis": "",
+			"explanation_for_patient": ""
+		},
+		"management": {
+			"admit_outpatient_care": "",
+			"investigations": {
+				"important": "",
+				"routine": ""
+			},
+			"referral_specialist": "",
+			"symptomatic_treatment": "",
+			"senior_review": "",
+			"patient_leaflets": "",
+			"follow_up": "",
+			"safety_netting": ""
+		}
+	}
+}

@@ -298,47 +298,109 @@ function linesToKeyValue(lines: string[]): Record<string, string> {
 }
 
 /**
- * Subsections under "Approach" that become top-level keys (per expected-json / station-md).
- * innerKey = wrap value as { [innerKey]: value }; array = value is array; else value as-is.
+ * Normalize approach subsection key and value to match new-expected-json (station-md).
+ * Some subsections map to nested keys (e.g. socrates_pain → pain_history.socrates);
+ * others need shape normalization (arrays, wrapper objects).
  */
-const APPROACH_PROMOTED: Record<
-  string,
-  { topKey: string; innerKey?: string; array?: boolean }
-> = {
-  socrates_pain: { topKey: "pain_history", innerKey: "socrates" },
-  socrates: { topKey: "pain_history", innerKey: "socrates" },
-  odipara: { topKey: "symptom_framework", innerKey: "odipara" },
-  differential_diagnoses: { topKey: "differential_diagnoses", array: true },
-  red_flags: { topKey: "red_flags", array: true },
-  past_medical_history: { topKey: "past_medical_history" },
-  social_history: { topKey: "social_history" },
-  ice: { topKey: "ice" },
-  impact: { topKey: "impact" },
-  examination: { topKey: "examination" },
-  diagnosis: { topKey: "diagnosis" },
-  management: { topKey: "management" },
-};
-
-function applyPromoted(
-  result: KeyValuePage,
+function normalizeApproachSubsection(
   subKey: string,
   value: KeyValueSectionValue
-): void {
-  const promo = APPROACH_PROMOTED[subKey];
-  if (!promo) return;
-  if (promo.innerKey) {
-    result[promo.topKey] = { [promo.innerKey]: value };
-  } else if (promo.array) {
-    result[promo.topKey] = Array.isArray(value) ? value : [""];
-  } else {
-    result[promo.topKey] = value as Record<string, KeyValueSectionValue>;
+): { key: string; value: KeyValueSectionValue } {
+  const toArr = (v: KeyValueSectionValue, fill = "") =>
+    Array.isArray(v) ? [...v] : [typeof v === "string" && v ? v : fill];
+  const padArr = (arr: string[], len: number, fill = "") =>
+    arr.length >= len ? arr.slice(0, len) : [...arr, ...Array(len - arr.length).fill(fill)];
+
+  switch (subKey) {
+    case "grips":
+      return { key: "grips", value: padArr(toArr(value), 1) };
+    case "presenting_complaint": {
+      let s = "";
+      if (typeof value === "string") s = value;
+      else if (Array.isArray(value)) s = value[0] ?? "";
+      else if (value && typeof value === "object" && !Array.isArray(value)) {
+        const o = value as Record<string, string>;
+        s = o.presenting_complaint ?? "";
+      }
+      return { key: "presenting_complaint", value: { presenting_complaint: s } };
+    }
+    case "history_of_presenting_complaint":
+      return { key: "history_of_presenting_complaint", value: padArr(toArr(value), 2) };
+    case "socrates_pain":
+    case "socrates":
+      return { key: "pain_history", value: { socrates: value } as KeyValueSectionValue };
+    case "odipara":
+      return { key: "symptom_framework", value: { odipara: value } as KeyValueSectionValue };
+    case "differential_diagnoses":
+      return { key: "differential_diagnoses", value: padArr(toArr(value), 3) };
+    case "red_flags":
+      return { key: "red_flags", value: padArr(toArr(value), 3) };
+    case "past_medical_history": {
+      const o = (value && typeof value === "object" && !Array.isArray(value)) ? value as Record<string, string> : {};
+      return {
+        key: "past_medical_history",
+        value: {
+          past_medical_conditions: o.past_medical_conditions ?? o.conditions ?? "",
+          medications: o.medications ?? "",
+          allergies: o.allergies ?? "",
+          family_history: o.family_history ?? "",
+          travel_history: o.travel_history ?? "",
+          occupation: o.occupation ?? "",
+        },
+      };
+    }
+    case "impact": {
+      const o = (value && typeof value === "object" && !Array.isArray(value)) ? value as Record<string, string> : {};
+      return {
+        key: "impact",
+        value: {
+          daily_life_impact: o.daily_life_impact ?? o.daily_life ?? "",
+          work_impact: o.work_impact ?? o.work ?? "",
+          sleep_impact: o.sleep_impact ?? o.sleep ?? "",
+        },
+      };
+    }
+    case "examination": {
+      const o = (value && typeof value === "object" && !Array.isArray(value)) ? value as Record<string, unknown> : {};
+      const findings = Array.isArray(o.findings) ? o.findings as string[] : [];
+      return {
+        key: "examination",
+        value: {
+          general_examination: typeof o.general_examination === "string" ? o.general_examination : "",
+          findings: padArr(findings, 3),
+        },
+      };
+    }
+    case "management": {
+      const o = (value && typeof value === "object" && !Array.isArray(value)) ? value as Record<string, unknown> : {};
+      const inv = o.investigations && typeof o.investigations === "object" && !Array.isArray(o.investigations)
+        ? o.investigations as Record<string, unknown>
+        : {};
+      const important = Array.isArray(inv.important) ? (inv.important[0] ?? "") : (typeof inv.important === "string" ? inv.important : "");
+      const routine = Array.isArray(inv.routine) ? (inv.routine[0] ?? "") : (typeof inv.routine === "string" ? inv.routine : "");
+      return {
+        key: "management",
+        value: {
+          admit_outpatient_care: typeof o.admit_outpatient_care === "string" ? o.admit_outpatient_care : (typeof o.care_plan === "string" ? o.care_plan : ""),
+          investigations: { important, routine },
+          referral_specialist: typeof o.referral_specialist === "string" ? o.referral_specialist : (typeof o.referral === "string" ? o.referral : ""),
+          symptomatic_treatment: typeof o.symptomatic_treatment === "string" ? o.symptomatic_treatment : "",
+          senior_review: typeof o.senior_review === "string" ? o.senior_review : "",
+          patient_leaflets: typeof o.patient_leaflets === "string" ? o.patient_leaflets : "",
+          follow_up: typeof o.follow_up === "string" ? o.follow_up : "",
+          safety_netting: typeof o.safety_netting === "string" ? o.safety_netting : "",
+        },
+      };
+    }
+    default:
+      return { key: subKey, value };
   }
 }
 
 /**
  * Convert Notion blocks into key-value JSON with nesting: ## sections as top-level keys,
- * ### subsections as nested objects or arrays. Subsections under Approach are promoted
- * to top-level per expected-json (pain_history, symptom_framework, differential_diagnoses, etc.).
+ * ### subsections as nested objects or arrays. Approach subsections stay under approach
+ * and are normalized to match new-expected-json (station-md) shape.
  */
 export function notionBlocksToKeyValueJson(blocks: NotionBlock[]): KeyValuePage {
   const parsed = notionBlocksToStructuredJson(blocks);
@@ -358,8 +420,9 @@ export function notionBlocksToKeyValueJson(blocks: NotionBlock[]): KeyValuePage 
         const subKey = toSlugKey(sub.title);
         if (!subKey) continue;
         const value = buildSubsectionValue(sub);
-        if (sectionKey === "approach" && APPROACH_PROMOTED[subKey]) {
-          applyPromoted(result, subKey, value);
+        if (sectionKey === "approach") {
+          const { key, value: normValue } = normalizeApproachSubsection(subKey, value);
+          sectionValue[key] = normValue;
         } else {
           sectionValue[subKey] = value;
         }

@@ -31,7 +31,7 @@ const JsonViewer: React.FC<JsonViewerProps> = ({ data }) => {
       : { value: data };
 
   return (
-    <div className="flex flex-col h-full w-full min-w-0 ">
+    <div className="flex flex-col h-full w-full min-w-0 pb-10 ">
       <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 px-2">
         Raw JSON
       </h2>
