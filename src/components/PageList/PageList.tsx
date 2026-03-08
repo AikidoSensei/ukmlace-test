@@ -14,9 +14,6 @@ const PageList: React.FC<PageListProps> = ({
 }) => {
   return (
     <div className="flex flex-col h-full min-w-0">
-      <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 px-2">
-        Pages
-      </h2>
       <ul className="flex-1 overflow-y-auto list-none p-0 m-0 space-y-0.5">
         {pages.map((page) => (
           <li key={page.id}>
